@@ -58,6 +58,8 @@ app.use('/public', express.static(__dirname + '/public'));
 // app.set('views', path.join(__dirname, 'views-onl'));
 // app.set('view engine', 'ejs')
 
+/** @TODOs src/public/home.html 파일을 보내기 0 -> express.static 기능 사용 */
+
 /** @TODOs src/public/home.html 파일을 보내기 1 */
 app.get('/test/send-file', function (req, res) {
   try {
@@ -127,6 +129,9 @@ app.get('/test/send-file', function (req, res) {
 // 
 // 여기서 부터는 ejs 로 작성
 // 
+
+
+/** @TODOs src/public/home.html 파일 보내기 4 ejs 사용*/
 
 /** @TODO 회원 등록 */
 
