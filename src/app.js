@@ -31,7 +31,9 @@ app.use(function logs(req, res, next) {
     method: req.method,
     path: req.url,
   };
-  console.log(`[${new Date().toLocaleString()}]`, JSON.stringify(log));
+  // console.log(`[${new Date()}]`, JSON.stringify(log));
+  // console.log(`[${new Date().toLocaleString()}]`, JSON.stringify(log));
+  console.log(`[${getDateStr(new Date())}]`, JSON.stringify(log));
   next();
 })
 
@@ -50,40 +52,39 @@ app.use(function logs(req, res, next) {
 // static file 처리
 // 
 app.use('/public', express.static(__dirname + '/public'));
-
+/** @TODOs src/public/home.html 파일을 보내기 0 -> express.static 기능 사용 */
 
 // 
 // view engine 설정
 // 
-// app.set('views', path.join(__dirname, 'views-onl'));
-// app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs')
 
-/** @TODOs src/public/home.html 파일을 보내기 0 -> express.static 기능 사용 */
 
 /** @TODOs src/public/home.html 파일을 보내기 1 */
-app.get('/test/send-file', function (req, res) {
-  try {
+// app.get('/test/send-file', function (req, res) {
+//   try {
 
-    const options = {
-      root: path.join(__dirname, "./public")
-    };
+//     const options = {
+//       root: path.join(__dirname, "./public")
+//     };
 
-    // const fileName = 'home.html';
-    const fileName = 'home.html';
-    res.sendFile(fileName, options, function (err) {
-      if (err) {
-        console.error('Error:', err);
-        res.send("404 NOT FOUND")
-        // res.send("<h1>404 NOT FOUND</h1>")
-      }
-    });
-  } catch (e) {
-    res.send(e.message)
-  }
-})
+//     // const fileName = 'home.html';
+//     const fileName = 'home.html';
+//     res.sendFile(fileName, options, function (err) {
+//       if (err) {
+//         console.error('Error:', err);
+//         res.send("404 NOT FOUND")
+//         // res.send("<h1>404 NOT FOUND</h1>")
+//       }
+//     });
+//   } catch (e) {
+//     res.send(e.message)
+//   }
+// })
 
 /** @TODOs src/public/home.html 파일을 보내기 1.2 */
-// app.get('/test/:filename', function (req, res) {
+// app.get('/test/send-file/:filename', function (req, res) {
 //   try {
 //     const fileName = req.params.filename
 
@@ -104,10 +105,10 @@ app.get('/test/send-file', function (req, res) {
 // })
 
 /** @TODOs src/public/home.html 파일을 보내기 2 */
-// app.get('/test/send', async function (req, res) {
+// app.get('/test/send-file2/:filename', async function (req, res) {
 //   try {
 //     // res.send("<h1>Hello World</h1>")
-//     const filePath = path.join(__dirname, "./public/home.html")
+//     const filePath = path.join(__dirname, "./public/"+req.params.filename)
 //     const data = await readFile(filePath)
 //     // console.log('data', data)
 //     res.send(data.toString())
@@ -117,9 +118,9 @@ app.get('/test/send-file', function (req, res) {
 // })
 
 /** @TODOs src/public/home.html 파일 보내기 3 */
-// app.get('/test/stream', async function (req, res) {
+// app.get('/test/stream/:filename', async function (req, res) {
 //   try {
-//     const filePath = path.join(__dirname, "./public/home.html")
+//     const filePath = path.join(__dirname, "./public/"+req.params.filename)
 //     fs.createReadStream(filePath).pipe(res)
 //   } catch (e) {
 //     res.send("FILE NOT FOUND")
@@ -132,6 +133,13 @@ app.get('/test/send-file', function (req, res) {
 
 
 /** @TODOs src/public/home.html 파일 보내기 4 ejs 사용*/
+app.get('/', async function (req, res) {
+  res.render("index", {data: {fileType: "EJS File"}})
+})
+
+app.get('/menus', async function (req, res) {
+  res.render("menus/index")
+})
 
 /** @TODO 회원 등록 */
 
@@ -147,3 +155,15 @@ app.listen(PORT, () => {
   console.log(`  Test Server is listening on Port ${PORT}`);
   console.log("=".repeat(80));
 });
+
+function getDateStr(d) {
+  let str = ""
+  str += d.getFullYear()
+  str += "/"+(d.getMonth()+1)
+  str += "/"+d.getDate()
+  str += " "+d.getHours()
+  str += "."+d.getMinutes().toString().padStart(2, "0")
+  str += "."+d.getSeconds()
+
+  return str
+}

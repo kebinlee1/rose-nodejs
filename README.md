@@ -75,7 +75,7 @@
     shopId: "",           // random Hex String  length = 20
     shopName: "",         // 가게 이름 max 100
     shopDescription: "",  // 가게 설명 max 256
-    addr: "",             // 주소
+    userType: "",             // admin, shop, user
   },
   ...
 ]
@@ -89,7 +89,7 @@
     itemCode: "",   // 메뉴 색인용 Secondary Key String, length = 4, 예) 0001 - Number String
     itemName: "",   // String 예) 짜장면
     price: "",      // Number
-    priceUnit: "",  // 화폐단위 명 예) KRW, USD, JPY
+    
   },
   ...
 ]
